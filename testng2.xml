@@ -1,0 +1,15 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="Suite2">
+    <test name="Test2">
+        <classes>
+            <class name="test1.HoverStyleTest"/>
+            <class name="test1.CheckSaleTest"/>
+            <class name="test1.CheckPageFiltersTest"/>
+            <class name="test1.CheckSortingPageTest"/>
+            <class name="test1.ShoppingCartTest"/>
+        </classes>
+    </test>
+    <listeners>
+        <listener class-name="test1.TestListener"/>
+    </listeners>
+</suite>
