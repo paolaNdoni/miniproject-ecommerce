@@ -56,85 +56,53 @@ public class ShoppingCartPage {
                 if (productRows.isEmpty()) {
                     Assert.fail("No products found in wishlist");
                 }
-
-                // Get the first product row
                 WebElement currentRow = wait.until(ExpectedConditions.presenceOfElementLocated(
                         By.xpath("(//tr[contains(@class, 'odd') or contains(@class, 'even')])[1]")));
                 basePageObject.getWebElementUtils().scrollToElement(currentRow);
-
-                // Find and click the edit button with wait
                 WebElement editButton = wait.until(ExpectedConditions.elementToBeClickable(
                         ShoppingCartElements.editButton));
                 basePageObject.getWebElementUtils().scrollToElement(editButton);
                 basePageObject.getWebElementUtils().safeClick(editButton);
-
-                // Wait for product page to load after clicking edit
                 basePageObject.getWaitUtils().waitForPageToLoad();
 
-                // Choose color based on current iteration
                 String color = (processed == 0) ? "Black" : "White";
-
-                // Wait for color option to be clickable
                 By colorSelector = By.cssSelector("img[alt='" + color + "']");
                 WebElement colorOption = wait.until(ExpectedConditions.elementToBeClickable(colorSelector));
                 basePageObject.getWebElementUtils().scrollToElement(colorOption);
                 basePageObject.getWebElementUtils().safeClick(colorOption);
 
-                // Short wait after color selection to ensure page updates
-                Thread.sleep(500);
-
-                // Find and click size option with wait
                 WebElement sizeOption = wait.until(ExpectedConditions.elementToBeClickable(
                         ShoppingCartElements.size));
                 basePageObject.getWebElementUtils().scrollToElement(sizeOption);
                 basePageObject.getWebElementUtils().safeClick(sizeOption);
 
-                // Short wait after size selection to ensure page updates
-                Thread.sleep(500);
-
-                // Find and click the Add to Cart button with wait
                 WebElement addToCart = wait.until(ExpectedConditions.elementToBeClickable(
                         ShoppingCartElements.submitButton));
                 basePageObject.getWebElementUtils().scrollToElement(addToCart);
                 basePageObject.getWebElementUtils().safeClick(addToCart);
 
-                // Wait for success message or page update after adding to cart
                 try {
                     wait.until(ExpectedConditions.or(
                             ExpectedConditions.presenceOfElementLocated(By.cssSelector(".message-success")),
                             ExpectedConditions.presenceOfElementLocated(By.cssSelector(".messages"))
                     ));
                 } catch (Exception e) {
-                    // Even if we don't see a success message, wait for page load
                     basePageObject.getWaitUtils().waitForPageToLoad();
                 }
 
                 processed++;
-
-                // Navigate back to wishlist for the next product
                 navigateToWishlist(BaseInformation.getDriver());
-
-                // Wait for wishlist page to load
                 basePageObject.getWaitUtils().waitForPageToLoad();
 
-            } catch (Exception e) {
-                // If we encounter an error, try to recover by returning to wishlist
+            } catch (Exception e) { //if error is accounted go to wishlist
                 try {
                     navigateToWishlist(BaseInformation.getDriver());
                     basePageObject.getWaitUtils().waitForPageToLoad();
-
-                    // If we can't recover for this product, log and continue with next
-                    if (e.getMessage().contains("stale element")) {
-                        processed++; // Skip this product and move on
-                    } else {
-                        Assert.fail("Error editing product " + (processed + 1) + ": " + e.getMessage());
-                    }
                 } catch (Exception recoveryEx) {
                     Assert.fail("Recovery failed: " + recoveryEx.getMessage());
                 }
             }
         }
-
         Assert.assertEquals("Not all products were edited successfully", editsRemaining, processed);
     }
 
