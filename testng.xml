@@ -1,6 +1,6 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
 <suite name="MyTestSuite">
-    <test name="AllTests">
+    <test name="Registration">
         <classes>
             <class name="test1.RegistrationTest" />
             <class name="test1.SignInTest"/>

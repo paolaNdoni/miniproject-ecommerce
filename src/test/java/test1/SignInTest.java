@@ -1,11 +1,7 @@
 package test1;
 
-import InternshipProject.Globals.Globals;
-import InternshipProject.Pages.RegisterPage;
-import InternshipProject.Pages.SignInPage;
-import InternshipProject.Utilities.BaseInformation;
-import InternshipProject.ConsentCookies.ConsentCookiesPage;
-import org.testng.annotations.AfterTest;
+import InternshipProject.Pages.RegistrationTestPages.RegisterPage;
+import InternshipProject.Pages.RegistrationTestPages.SignInPage;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 

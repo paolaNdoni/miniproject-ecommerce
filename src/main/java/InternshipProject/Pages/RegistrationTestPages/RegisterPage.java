@@ -1,4 +1,4 @@
-package InternshipProject.Pages;
+package InternshipProject.Pages.RegistrationTestPages;
 
 import InternshipProject.Elements.RegisterPageElements;
 import InternshipProject.Globals.Globals;

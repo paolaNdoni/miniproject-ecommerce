@@ -1,17 +1,22 @@
 package test1;
 
-import InternshipProject.Pages.CheckSortingPage;
-import InternshipProject.Pages.HoverStylePage;
-import InternshipProject.Pages.RegisterPage;
+import InternshipProject.ConsentCookies.ConsentCookiesPage;
+import InternshipProject.Globals.Globals;
+import InternshipProject.Pages.ModifyElementsPages.CheckSortingPage;
+import InternshipProject.Pages.ModifyElementsPages.HoverStylePage;
+import InternshipProject.Pages.RegistrationTestPages.RegisterPage;
+import InternshipProject.Pages.RegistrationTestPages.SignInPage;
 import InternshipProject.Utilities.BaseInformation;
-import org.testng.annotations.Listeners;
+import org.openqa.selenium.WebDriver;
 import org.testng.annotations.Test;
-@Listeners(TestListener.class)
+//@Listeners(TestListener.class)
 public class CheckSortingPageTest  extends BaseTest{
+    RegisterPage registerPage = new RegisterPage();
+    ConsentCookiesPage consentCookiesPage = new ConsentCookiesPage();
+    SignInPage signInPage = new SignInPage();
     HoverStylePage hoverStylePage = new HoverStylePage();
     CheckSortingPage checkSortingPage = new CheckSortingPage();
-    RegisterPage registerPage = new RegisterPage();
-    @Test
+    @Test(groups = "wishlist" )
     public void test() throws InterruptedException {
         hoverStylePage.hoverWomen();
         hoverStylePage.clickViewAll();
@@ -20,7 +25,8 @@ public class CheckSortingPageTest  extends BaseTest{
         checkSortingPage.clickWishlistLinks();
         registerPage.clickAccountButton();
         checkSortingPage.getWishlistNumber(2);
-
+        WebDriver driver = BaseInformation.getDriver();
+        System.out.println("Final URL at end of CheckSortingPageTest: " + driver.getCurrentUrl());
 
     }
 }

@@ -7,10 +7,11 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
 import java.time.Duration;
+import java.util.List;
 
 public class WebElementUtils {
     WebDriver driver = BaseInformation.getDriver();
-
+   private final BasePageObject basePageObject = new BasePageObject();
     private final BaseInformation baseInformation;
     private final WaitUtils waitUtils;
 
@@ -44,7 +45,20 @@ public class WebElementUtils {
         ((JavascriptExecutor) driver)
                 .executeScript("arguments[0].scrollIntoView(true);", element);
     }
+    public void scrollToElementVisible(WebElement element) {
+        try {
+            if (element == null) {
+                System.out.println("Warning: Cannot scroll to null element");
+                return;
+            }
 
+            JavascriptExecutor js = (JavascriptExecutor) driver;
+            js.executeScript("arguments[0].scrollIntoView(true);", element);
+            waitUtils.wait(500);
+        } catch (Exception e) {
+            System.out.println("Error in scrollToElement: " + e.getMessage());
+        }
+    }
     public void scrollOffset(int x, int y) {
         ((JavascriptExecutor) driver)
                 .executeScript("window.scrollBy(arguments[0],arguments[1])", x, y);
@@ -65,12 +79,35 @@ public class WebElementUtils {
         return fullText;
     }
 
-
+    public boolean scrollDown(int pixels) {
+        try {
+            JavascriptExecutor js = (JavascriptExecutor) driver;
+            js.executeScript("window.scrollBy(0, " + pixels + ");");
+            waitUtils.wait(300);
+            return true;
+        } catch (Exception e) {
+            System.out.println("Error in scrollDown: " + e.getMessage());
+            return false;
+        }
+    }
     public void sendKeysToElementWithWait(WebElement element, String value, long millsWait) {
         element.sendKeys(value);
         WaitUtils.waitFor(millsWait);
     }
-
+    public void scrollToElementAndClick(WebElement element) {
+        try {
+            JavascriptExecutor js = (JavascriptExecutor) driver;
+            // Scroll the element into view
+            js.executeScript("arguments[0].scrollIntoView({block: 'center'});", element);
+            // Optional: Wait for the scrolling action to complete
+            Thread.sleep(500);
+            // Click the element
+            js.executeScript("arguments[0].click();", element);
+        } catch (InterruptedException e) {
+            // Handle the exception as needed
+            Thread.currentThread().interrupt();
+        }
+    }
 
     public boolean isElementVisibleWithWait(int mills, WebElement element) {
         try {
@@ -88,4 +125,26 @@ public class WebElementUtils {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("window.scrollBy(0, -" + pixels + ");");
     }
+    public void clickElement(JavascriptExecutor js, WebElement element) throws InterruptedException {
+        js.executeScript("arguments[0].scrollIntoView({block: 'center'});", element);
+        Thread.sleep(300);
+        js.executeScript("arguments[0].click();", element);
+    }
+    public WebElement findClickableElement(WebDriver driver, By locator) {
+        for (int i = 0; i < 3; i++) {
+            try {
+                List<WebElement> elements = driver.findElements(locator);
+                if (!elements.isEmpty()) {
+                    WebElement element = elements.get(0);
+                    basePageObject.getWaitUtils().waitForElementClickable(element);
+                    return element;
+                }
+                Thread.sleep(1000);
+            } catch (Exception e) {
+                // Continue to next retry
+            }
+        }
+        return null;
+    }
+
 }

@@ -1,9 +1,7 @@
 package test1;
 
-import InternshipProject.ConsentCookies.ConsentCookiesPage;
-import InternshipProject.Globals.Globals;
-import InternshipProject.Pages.CheckPageFiltersPage;
-import InternshipProject.Pages.HoverStylePage;
+import InternshipProject.Pages.ModifyElementsPages.CheckPageFiltersPage;
+import InternshipProject.Pages.ModifyElementsPages.HoverStylePage;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 

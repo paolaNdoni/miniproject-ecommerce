@@ -2,7 +2,7 @@ package test1;
 
 import InternshipProject.ConsentCookies.ConsentCookiesPage;
 import InternshipProject.Globals.Globals;
-import InternshipProject.Pages.RegisterPage;
+import InternshipProject.Pages.RegistrationTestPages.RegisterPage;
 
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;

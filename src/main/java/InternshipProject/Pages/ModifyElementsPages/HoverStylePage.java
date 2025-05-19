@@ -1,18 +1,18 @@
-package InternshipProject.Pages;
+package InternshipProject.Pages.ModifyElementsPages;
 
 import InternshipProject.Elements.HoverStyleElements;
 import InternshipProject.Utilities.BaseInformation;
 import InternshipProject.Utilities.BasePageObject;
 import org.junit.Assert;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
 public class HoverStylePage {
     BasePageObject basePageObject = new BasePageObject();
     HoverStyleElements hoverStyleElements = new HoverStyleElements();
-    public HoverStylePage(){
+    public HoverStylePage() {
         PageFactory.initElements(BaseInformation.getDriver(), this);
     }
+
     public void hoverWomen(){
         basePageObject.getWaitUtils()
                 .waitForElementVisibleWithCustomTime(5000, hoverStyleElements.women);

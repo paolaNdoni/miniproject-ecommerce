@@ -1,8 +1,8 @@
 package test1;
 
 
-import InternshipProject.Pages.CheckSalePage;
-import InternshipProject.Pages.HoverStylePage;
+import InternshipProject.Pages.ModifyElementsPages.CheckSalePage;
+import InternshipProject.Pages.ModifyElementsPages.HoverStylePage;
 
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;

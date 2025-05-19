@@ -1,10 +1,9 @@
-package InternshipProject.Pages;
+package InternshipProject.Pages.RegistrationTestPages;
 
 import InternshipProject.Elements.SignInElements;
 import InternshipProject.Globals.Globals;
 import InternshipProject.Utilities.BaseInformation;
 import InternshipProject.Utilities.BasePageObject;
-import InternshipProject.Utilities.WebDriverUtils;
 import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;

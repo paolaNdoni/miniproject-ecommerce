@@ -1,4 +1,4 @@
-package InternshipProject.Pages;
+package InternshipProject.Pages.ModifyElementsPages;
 
 import InternshipProject.Elements.CheckSaleElements;
 import InternshipProject.Utilities.BaseInformation;

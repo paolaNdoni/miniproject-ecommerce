@@ -12,6 +12,7 @@ import java.util.function.Function;
 public class WaitUtils {
     private BaseInformation baseInformation;
     private Duration defaultDuration;
+    private BasePageObject basePageObject = new BasePageObject();
 
     private WebDriver driver = BaseInformation.getDriver();
     public WaitUtils(BaseInformation baseInformation, Duration defaultDuration) {
@@ -90,6 +91,8 @@ public class WaitUtils {
         wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(locator));
         return BaseInformation.getDriver().findElements(locator);
     }
+
+
     public void waitForNumberOfElementsToBe(By locator, int expectedCount, long mills) {
         new WebDriverWait(BaseInformation.getDriver(), Duration.ofMillis(mills))
                 .until(ExpectedConditions.numberOfElementsToBe(locator, expectedCount));
@@ -157,6 +160,21 @@ public class WaitUtils {
                 webDriver -> ((JavascriptExecutor) webDriver)
                         .executeScript("return document.readyState").equals("complete")
         );
+    }
+    public WebElement waitAndFindElement(WebDriver driver, By locator) {
+        try {
+            basePageObject.getWaitUtils().waitForPageToLoad();
+            List<WebElement> elements = driver.findElements(locator);
+            if (elements.isEmpty()) {
+                return null;
+            }
+            WebElement element = elements.get(0);
+            basePageObject.getWebElementUtils().scrollToElement(element);
+            basePageObject.getWaitUtils().waitForElementClickable(element);
+            return element;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
 }

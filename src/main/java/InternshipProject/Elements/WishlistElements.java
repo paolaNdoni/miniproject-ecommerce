@@ -23,4 +23,8 @@ public class WishlistElements {
     public WebElement addToCartButton;
     @FindBy(xpath = "//a[contains(text(), 'Edit')]")
     public WebElement editButton;
+    @FindBy(xpath = "//h1[contains(text(), 'NoLIta Cami')]")
+    public WebElement firstProd;
+    @FindBy(xpath = "//h1[contains(text(),'Ludlow Oxford Top')]")
+    public WebElement secondProd;
 }
