@@ -21,19 +21,7 @@ public class CheckSortingPage {
     WishlistElements wishlistElements = new WishlistElements();
     SignInPage signInPage = new SignInPage();
     CheckSortByElements checkSortByElements = new CheckSortByElements();
-    private void ensureUserLoggedIn() {
-        if (!isUserLoggedIn()) {
-            // Use your existing SigningIn class
-            signInPage.login(); // Or whatever your login method is called
 
-            basePageObject.getWaitUtils().waitForPageToLoad();
-
-            // Verify login was successful
-            if (!isUserLoggedIn()) {
-                throw new RuntimeException("Failed to login before test execution");
-            }
-        }
-    }
     public CheckSortingPage() {
         PageFactory.initElements(BaseInformation.getDriver(), this);
     }
@@ -97,7 +85,6 @@ public class CheckSortingPage {
             }
 
             Assert.assertTrue(errorMessage, isSorted);
-            System.out.println("Verified: Products are correctly sorted from cheapest to most expensive");
         } catch (Exception e) {
             Assert.fail("Error checking sort order: " + e.getMessage());
         }
@@ -136,33 +123,15 @@ public class CheckSortingPage {
             basePageObject.getWaitUtils().waitForElementVisibleFluently(
                     By.xpath("//h1[text()='My Wishlist']"), 7, 500);
             basePageObject.getWaitUtils().waitForPageToLoad();
-
-            if (!isUserLoggedIn()) {
-                driver.navigate().refresh();
-                basePageObject.getWaitUtils().waitForPageToLoad();
-            if (!isUserLoggedIn()) {
-                throw new RuntimeException("User got logged out after clicking wishlist link at index " + i);
-            }
-            }
         }
     }
 
-    private boolean isUserLoggedIn() {
-        return !BaseInformation.getDriver().findElements(By.cssSelector("a[href*='logout']")).isEmpty();
-    }
 
     public void getWishlistNumber(int expectedCount) {
         WebDriver driver = BaseInformation.getDriver();
         basePageObject.getWaitUtils().waitForElementVisibleWithCustomTime(20000, wishlistElements.wishlist);
         WebElement wishlistNumberElement = driver.findElement(By.cssSelector("a[href*='wishlist']"));
-        if (!isUserLoggedIn()) {
-            driver.navigate().refresh();
-            basePageObject.getWaitUtils().waitForPageToLoad();
-            wishlistNumberElement = driver.findElement(By.cssSelector("a[href*='wishlist']"));
-        }
-
         String text = wishlistNumberElement.getText();
-        System.out.println("Wishlist text: " + text);
 
         try {
             int start = text.indexOf('(');

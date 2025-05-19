@@ -19,7 +19,7 @@ public class ShoppingCartTest extends BaseTest {
         shoppingCartPage.clickShoppingCart();
         shoppingCartPage.changeQuantity("2");
         shoppingCartPage.clickOk();
-        Thread.sleep(2000);
+
     }
 
 }

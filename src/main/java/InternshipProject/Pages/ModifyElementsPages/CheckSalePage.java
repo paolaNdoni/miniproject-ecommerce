@@ -9,6 +9,8 @@ import org.openqa.selenium.support.PageFactory;
 
 import java.util.List;
 
+import static InternshipProject.Elements.CheckSaleElements.productLocator;
+
 public class CheckSalePage {
     BasePageObject basePageObject = new BasePageObject();
     CheckSaleElements checkSaleElements = new CheckSaleElements();
@@ -19,7 +21,7 @@ public class CheckSalePage {
 
 
     public void checkDiscount() {
-        By productLocator = By.cssSelector("ul.products-grid > li.item");
+
         WebDriver driver = BaseInformation.getDriver();
         basePageObject.getWaitUtils().waitForElementVisibleWithCustomTime(7000, productLocator);
         List<WebElement> productsList = driver.findElements(productLocator);
@@ -27,7 +29,6 @@ public class CheckSalePage {
             try {
                 List<WebElement> currentProducts = driver.findElements(productLocator);
                 if (i >= currentProducts.size()) {
-                    System.out.println("Product count changed. Stopping at index " + i);
                     break;
                 }
                 WebElement product = currentProducts.get(i);
@@ -41,7 +42,7 @@ public class CheckSalePage {
                 if (i > 0) i--;
                 basePageObject.getWaitUtils().waitForSeconds(1);
             } catch (IndexOutOfBoundsException | NoSuchElementException e) {
-                System.out.println("Issue with product " + i + ": " + e.getMessage());
+                Assert.fail("Issue with product " + i + ": " + e.getMessage());
             }
         }
     }

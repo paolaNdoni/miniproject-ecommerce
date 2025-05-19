@@ -12,5 +12,7 @@
     </test>
     <listeners>
         <listener class-name="test1.TestListener"/>
+        <listener class-name="test1.ExtentTestListener"/>
+
     </listeners>
 </suite>

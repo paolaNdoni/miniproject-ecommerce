@@ -5,6 +5,8 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 import java.util.List;
@@ -145,6 +147,50 @@ public class WebElementUtils {
             }
         }
         return null;
+    }
+    public void scrollTo(WebElement element) {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].scrollIntoView({block: 'center'});", element);
+    }
+
+    public void safeClick(WebElement element) {
+        try {
+            element.click();
+        } catch (Exception e) {
+            JavascriptExecutor js = (JavascriptExecutor) driver;
+            js.executeScript("arguments[0].click();", element);
+        }
+    }
+
+    public void setInputValue(WebElement input, String value) {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript(
+                "arguments[0].value = arguments[1]; " +
+                        "arguments[0].dispatchEvent(new Event('change', { bubbles: true }));",
+                input, value
+        );
+    }
+    public boolean safeClickButton(By by) {
+        WebDriverWait wait = new WebDriverWait(BaseInformation.getDriver(), Duration.ofSeconds(10));
+        try {
+            WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(by));
+                try {
+                    JavascriptExecutor js = (JavascriptExecutor) BaseInformation.getDriver();
+                    js.executeScript("arguments[0].click();", element);
+                    return true;
+                } catch (Exception jsException) {
+                    try {
+                        Actions actions = new Actions(BaseInformation.getDriver());
+                        actions.moveToElement(element).click().build().perform();
+                        return true;
+                    } catch (Exception actionsException) {
+                        return false;
+                    }
+                }
+        } catch (Exception e) {
+            // Element not found or not interactable
+            return false;
+        }
     }
 
 }

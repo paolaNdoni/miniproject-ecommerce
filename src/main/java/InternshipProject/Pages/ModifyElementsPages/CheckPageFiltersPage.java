@@ -6,13 +6,11 @@ import InternshipProject.Utilities.BasePageObject;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
-
-import java.time.Duration;
-import java.util.Arrays;
+import static InternshipProject.Elements.CheckPageFiltersElements.productContainer;
 import java.util.List;
+
 
 
 public class CheckPageFiltersPage {
@@ -32,42 +30,41 @@ public class CheckPageFiltersPage {
     }
 
     public void checkBlueOutline() {
-        By productLocator = By.cssSelector("ul.products-grid > li.item");
-        basePageObject.getWaitUtils().waitForElementVisibleWithCustomTime(7000, productLocator);
+
+        basePageObject.getWaitUtils().waitForElementVisibleWithCustomTime(7000, productContainer);
         basePageObject.getWebDriverUtils().waitForPageToLoad();
 
-        List<WebElement> products = BaseInformation.getDriver().findElements(productLocator);
+        List<WebElement> products = BaseInformation.getDriver().findElements(productContainer);
         Assert.assertFalse("No products found on the page", products.isEmpty());
 
         for (int i = 0; i < products.size(); i++) {
-            for (int attempt = 0; attempt < 3; attempt++) {
+            for (int attempt = 0; true; attempt++) {
                 try {
-                    List<WebElement> currentProducts = BaseInformation.getDriver().findElements(productLocator);
+                    List<WebElement> currentProducts = BaseInformation.getDriver().findElements(productContainer);
                     if (i >= currentProducts.size()) {
                         break;
                     }
                     WebElement product = currentProducts.get(i);
-                    basePageObject.getWebElementUtils().scrollToElement(product);
+                    basePageObject.getWebElementUtils().scrollTo(product);
                     basePageObject.getWaitUtils().waitForSeconds(1);
 
-                    List<WebElement> selectedOptions = product.findElements(By.cssSelector("li.option-black.selected"));
+                    List<WebElement> selectedOptions = product.findElements(CheckPageFiltersElements.selectedOption);
                     if (selectedOptions.isEmpty()) {
-                        List<WebElement> allOptions = product.findElements(By.cssSelector("li[class*='option-']"));
+                        List<WebElement> allOptions = product.findElements(CheckPageFiltersElements.allOptions);
                         if (!allOptions.isEmpty()) {
-                            Assert.fail("Product " + (i+1) + " has " + allOptions.size() + " color options but none are selected");
+                            Assert.fail("Product " +(i+1)+" has "+allOptions.size()+"color options but none are selected");
                         }
                         break;
                     }
                     WebElement selectedOption = selectedOptions.get(0);
-                    WebElement swatchLink = selectedOption.findElement(By.cssSelector("a.swatch-link"));
+                    WebElement swatchLink = selectedOption.findElement(CheckPageFiltersElements.swatchLink);
                     String borderTopColor = swatchLink.getCssValue("border-top-color");
-                    boolean hasBlueOutline = borderTopColor.contains("rgb(51, 153, 204)") || borderTopColor.contains("rgb(51,153,204)");
-
+                    boolean hasBlueOutline = borderTopColor.contains("rgb(51, 153, 204, 1)") ||
+                            borderTopColor.contains("rgb(51,153,204)");
                     if (!hasBlueOutline) {
                         String borderColor = swatchLink.getCssValue("border-top-color");
-                        hasBlueOutline = borderColor != null &&
-                                (borderColor.contains("rgb(51, 153, 204)") ||
-                                        borderColor.contains("rgb(51,153,204)"));
+                        hasBlueOutline = borderColor.contains("rgba(51, 153, 204, 1)") ||
+                                borderColor.contains("rgba(51,153,204)");
                         Assert.assertTrue("Product " + (i+1) + " selected swatch has incorrect border color: " + borderColor,
                                 hasBlueOutline);
                     }
@@ -85,22 +82,20 @@ public class CheckPageFiltersPage {
             }
         }
     }
-
     public void navigateBack(){
         BaseInformation.getDriver().navigate().back();
     }
+
     public void clickPrice(){
         basePageObject.getWebElementUtils().scrollToElement(checkPageFiltersElements.priceRangeLink);
         basePageObject.getWaitUtils()
                 .waitForElementVisibleWithCustomTime(2000, checkPageFiltersElements.priceRangeLink)
                 .click();
-
         basePageObject.getWaitUtils()
-                .waitForNumberOfElementsToBe(By.cssSelector("ul.products-grid > li.item"), 3, 5000);
+                .waitForNumberOfElementsToBe(productContainer, 3, 5000);
 
         List<WebElement> products = BaseInformation.getDriver()
-                .findElements(By.cssSelector("ul.products-grid > li.item"));
-
+                .findElements(productContainer);
         Assert.assertEquals("Expected 3 products to be displayed", 3, products.size());
     }
 

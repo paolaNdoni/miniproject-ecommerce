@@ -5,6 +5,8 @@ import InternshipProject.Elements.ShoppingCartElements;
 import InternshipProject.Elements.WishlistElements;
 import InternshipProject.Utilities.BaseInformation;
 import InternshipProject.Utilities.BasePageObject;
+import com.fasterxml.jackson.databind.ser.Serializers;
+import org.junit.Assert;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -13,18 +15,23 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import java.util.List;
 
+import static InternshipProject.Elements.ShoppingCartElements.okButton;
+
 public class ShoppingCartPage {
     BasePageObject basePageObject = new BasePageObject();
     WishlistElements wishlistElements = new WishlistElements();
     RegisterPageElements registerPageElements = new RegisterPageElements();
     private WebDriverWait wait = new WebDriverWait(BaseInformation.getDriver(), Duration.ofSeconds(10));
+
     private WebElement find(By locator) {
         return wait.until(ExpectedConditions.elementToBeClickable(locator));
     }
+
     public ShoppingCartPage() {
         PageFactory.initElements(BaseInformation.getDriver(), this);
     }
-    public void clickAccount(){
+
+    public void clickAccount() {
         basePageObject.getWebElementUtils().scrollToElement(registerPageElements.account);
         basePageObject.getWaitUtils().waitForElementVisibleWithCustomTime(5000, registerPageElements.account);
         registerPageElements.account.click();
@@ -37,100 +44,93 @@ public class ShoppingCartPage {
     }
 
     public void editProducts() {
-        WebDriver driver = BaseInformation.getDriver();
         basePageObject.getWaitUtils().waitForPageToLoad();
         int editsRemaining = 2;
         int processed = 0;
         int attempts = 0;
-        int maxAttempts = 2;
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        while (processed < editsRemaining && attempts < maxAttempts) {
+        while (processed < editsRemaining) {
             try {
-                if (attempts > 0) {
-                    driver.navigate().refresh();
-                    basePageObject.getWaitUtils().waitForPageToLoad();
-                    Thread.sleep(1000);
-                }
-                List<WebElement> productRows = driver.findElements(By.cssSelector("tbody tr"));
+                List<WebElement> productRows = BaseInformation.getDriver().findElements(ShoppingCartElements.productRow);
                 if (productRows.isEmpty()) {
-                    System.out.println("No products found in wishlist, retrying...");
+                    Assert.fail("No products found in wishlist, retrying...");
                     attempts++;
                     continue;
                 }
                 WebElement currentRow = productRows.get(0);
-                js.executeScript("arguments[0].scrollIntoView({block: 'center'});", currentRow);
+                basePageObject.getWebElementUtils().scrollToElement(currentRow);
                 Thread.sleep(500);
 
                 WebElement editButton = basePageObject.getWebElementUtils().findClickableElement(
-                        driver, By.cssSelector("a.link-edit"));
+                        BaseInformation.getDriver(), ShoppingCartElements.editButton);
                 if (editButton == null) {
-                    System.out.println("Edit button not found, retrying...");
+                    Assert.fail("Edit button not found, retrying...");
                     attempts++;
                     continue;
                 }
-
-                js.executeScript("arguments[0].click();", editButton);
+                basePageObject.getWebElementUtils().safeClick(editButton);
                 basePageObject.getWaitUtils().waitForPageToLoad();
-                WebElement sizeOption = basePageObject.getWebElementUtils().findClickableElement(driver, By.xpath("//span[contains(text(),' S ')]"));
-                if (sizeOption == null) {
-                    System.out.println("Size option not found, retrying...");
-                    attempts++;
-                    continue;
-                }
-                js.executeScript("arguments[0].scrollIntoView({block: 'center'});", sizeOption);
-                Thread.sleep(500);
-                js.executeScript("arguments[0].click();", sizeOption);
+
                 String color = (processed == 0) ? "Black" : "White";
                 WebElement colorOption = basePageObject.getWebElementUtils()
-                        .findClickableElement(driver, By.cssSelector("img[alt='" + color + "']"));
+                        .findClickableElement(BaseInformation.getDriver(), By.cssSelector("img[alt='" + color + "']"));
                 if (colorOption == null) {
-                    System.out.println("Color option not found, retrying...");
+                    Assert.fail("Color option not found, retrying...");
                     attempts++;
                     continue;
                 }
-                js.executeScript("arguments[0].scrollIntoView({block: 'center'});", colorOption);
+                basePageObject.getWebElementUtils().scrollToElement(colorOption);
                 Thread.sleep(500);
-                js.executeScript("arguments[0].click();", colorOption);
-                WebElement addToCart = basePageObject.getWebElementUtils().findClickableElement(driver, By.xpath("//button[contains(@onclick,'submit')]"));
+                basePageObject.getWebElementUtils().safeClick(colorOption);
+                WebElement sizeOption = basePageObject.getWebElementUtils()
+                        .findClickableElement(BaseInformation.getDriver(), ShoppingCartElements.size);
+                if (sizeOption == null) {
+                    Assert.fail("Size option not found, retrying...");
+                    attempts++;
+                    continue;
+                }
+                basePageObject.getWebElementUtils().scrollToElement(sizeOption);
+                Thread.sleep(500);
+                basePageObject.getWebElementUtils().safeClick(sizeOption);
+                WebElement addToCart = basePageObject.getWebElementUtils().findClickableElement(BaseInformation.getDriver(), ShoppingCartElements.submitButton);
                 if (addToCart == null) {
-                    System.out.println("Add to cart button not found, retrying...");
+                    Assert.fail("Add to cart button not found, retrying...");
                     attempts++;
                     continue;
                 }
-                js.executeScript("arguments[0].scrollIntoView({block: 'center'});", addToCart);
+                basePageObject.getWebElementUtils().scrollToElement(addToCart);
                 Thread.sleep(500);
-                js.executeScript("arguments[0].click();", addToCart);
+                basePageObject.getWebElementUtils().safeClick(addToCart);
                 basePageObject.getWaitUtils().waitForPageToLoad();
 
                 processed++;
-                attempts = 0;
-                System.out.println("Successfully processed product " + processed + " of " + editsRemaining);
-                navigateToWishlist(driver);
+                Assert.assertTrue("Successfully processed product " + processed + " of " + editsRemaining, true);
+                navigateToWishlist(BaseInformation.getDriver());
 
             } catch (Exception e) {
-                System.out.println("Error: " + e.getMessage());
+                Assert.fail("Error: " + e.getMessage());
                 attempts++;
                 try {
-                    navigateToWishlist(driver);
+                    navigateToWishlist(BaseInformation.getDriver());
                 } catch (Exception recoveryEx) {
-                    System.out.println("Recovery failed: " + recoveryEx.getMessage());
+                    Assert.fail("Recovery failed: " + recoveryEx.getMessage());
                 }
             }
         }
 
         if (processed < editsRemaining) {
-            System.out.println("Only completed " + processed + " edits out of " + editsRemaining);
+            Assert.fail("Only completed " + processed + " edits out of " + editsRemaining);
         }
     }
 
-    private void navigateToWishlist(WebDriver driver){
+
+    private void navigateToWishlist(WebDriver driver) {
         for (int i = 0; i < 3; i++) {
             try {
                 clickAccount();
                 Thread.sleep(500);
                 clickWishList();
                 basePageObject.getWaitUtils().waitForPageToLoad();
-                if (!driver.findElements(By.cssSelector("tbody tr")).isEmpty()) {
+                if (!driver.findElements(ShoppingCartElements.productRow).isEmpty()) {
                     return;
                 }
                 Thread.sleep(1000);
@@ -138,7 +138,7 @@ public class ShoppingCartPage {
                 //
             }
         }
-        throw new RuntimeException("Failed to navigate to wishlist");
+        Assert.fail("Failed to navigate to wishlist");
     }
 
     public void clickShoppingCart() {
@@ -148,63 +148,62 @@ public class ShoppingCartPage {
     }
 
     public void changeQuantity(String qtyText) {
-        By locator = By.cssSelector("input[id^='qinput-']");
         WebDriverWait wait = new WebDriverWait(BaseInformation.getDriver(), Duration.ofSeconds(10));
         JavascriptExecutor js = (JavascriptExecutor) BaseInformation.getDriver();
 
         for (int i = 0; i < 3; i++) {
             try {
-                WebElement qty = wait.until(ExpectedConditions.presenceOfElementLocated(locator));
-                js.executeScript("arguments[0].scrollIntoView({block: 'center'});", qty);
+                WebElement qty = wait.until(ExpectedConditions.presenceOfElementLocated(ShoppingCartElements.inputQuantity));
+                basePageObject.getWebElementUtils().scrollTo(qty);
                 Thread.sleep(500);
-                js.executeScript(
-                        "arguments[0].value = arguments[1]; " +
-                                "arguments[0].dispatchEvent(new Event('change', { bubbles: true }));",
-                        qty, qtyText
-                );
+                basePageObject.getWebElementUtils().setInputValue(qty, qtyText);
+
                 Thread.sleep(500);
                 String currentValue = qty.getAttribute("value");
 
                 if (qtyText.equals(currentValue)) {
-                    System.out.println("Quantity changed to: " + qtyText);
+                    Assert.assertEquals("Quantity changed successfully", qtyText, currentValue);
                     return;
                 }
             } catch (Exception e) {
-                System.out.println("Attempt " + (i+1) + " failed: " + e.getMessage());
+                if (i == 2) {
+                    Assert.fail("Attempt " + (i + 1) + " failed: " + e.getMessage());
+                }
             }
         }
-        throw new RuntimeException("Failed to change quantity after multiple attempts");
+        Assert.fail("Failed to change quantity after multiple attempts");
     }
 
     public void clickOk() {
-        WebDriver driver = BaseInformation.getDriver();
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        JavascriptExecutor js = (JavascriptExecutor) driver;
+        WebDriverWait wait = new WebDriverWait(BaseInformation.getDriver(), Duration.ofSeconds(10));
         try {
             WebElement quantityInput = wait.until(ExpectedConditions.elementToBeClickable(
-                    By.cssSelector("input[id^='qinput-']")));
+                    ShoppingCartElements.inputQuantity));
             quantityInput.click();
-            Thread.sleep(300);
+            Thread.sleep(500);
         } catch (Exception e) {
-            System.out.println("Note: Could not click quantity input first: " + e.getMessage());
+            Assert.fail("Failed to click quantity input: " + e.getMessage());
         }
-        By okButtonLocator = By.cssSelector("[id^='qbutton-'], .confirm-button, .ok-button");
         for (int i = 0; i < 3; i++) {
             try {
-                WebElement okButton = wait.until(ExpectedConditions.elementToBeClickable(okButtonLocator));
-                try {
-                    okButton.click();
-                } catch (Exception e) {
-                    js.executeScript("arguments[0].click();", okButton);
-                }
-                wait.until(ExpectedConditions.invisibilityOfElementLocated(okButtonLocator));
+                basePageObject.getWaitUtils().waitForElementVisible(ShoppingCartElements.okButton);
+                wait.until(ExpectedConditions.elementToBeClickable(ShoppingCartElements.okButton));
+                basePageObject.getWebElementUtils().safeClickButton(ShoppingCartElements.okButton);
+                wait.until(ExpectedConditions.invisibilityOfElementLocated(ShoppingCartElements.okButton));
+                System.out.println("OK button clicked successfully");
                 return;
             } catch (Exception e) {
-                System.out.println("Click attempt " + (i+1) + " failed: " + e.getMessage());
-                try { Thread.sleep(500); } catch (InterruptedException ie) { /* ignore */ }
+                System.out.println("Click attempt " + (i + 1) + " failed: " + e.getMessage());
+                if (i == 2) {
+                    Assert.fail("Failed to click OK button after 3 attempts: " + e.getMessage());
+                }
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException ignored) {
+                }
             }
         }
-        throw new RuntimeException("Failed to click OK button after multiple attempts");
+        Assert.fail("Failed to click OK button after multiple attempts");
     }
 }
 
