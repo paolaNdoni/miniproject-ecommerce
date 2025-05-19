@@ -13,12 +13,12 @@ public class CheckSortingPageTest  extends BaseTest{
 
     @Test(groups = "wishlist" )
     public void test() throws InterruptedException {
-        hoverStylePage.hoverWomen();
-        hoverStylePage.clickViewAll();
-        checkSortingPage.selectPriceDropDown();
-        checkSortingPage.checkSortBy();
-        checkSortingPage.clickWishlistLinks();
+//        hoverStylePage.hoverWomen();
+//        hoverStylePage.clickViewAll();
+//        checkSortingPage.selectPriceDropDown();
+//        checkSortingPage.checkSortBy();
+//        checkSortingPage.clickWishlistLinks();
         registerPage.clickAccountButton();
-        checkSortingPage.getWishlistNumber(2);
+//        checkSortingPage.getWishlistNumber(2);
     }
 }

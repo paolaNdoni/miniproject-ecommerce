@@ -14,6 +14,9 @@ public class ShoppingCartElements {
     public static final By editButton = By.cssSelector("a.link-edit");
     public static final By size = By.xpath("//span[contains(text(),' S ')]");
     public static final By submitButton = By.xpath("//button[contains(@onclick,'submit')]");
-    public static final By okButton = By.cssSelector("[id^='qbutton-'], .confirm-button, .ok-button");
-    public static final By inputQuantity = By.cssSelector("input[id^='qinput-']");
+    public static final By updateButton = By.xpath("(//button[@name='update_cart_action'][3])");
+    public static final By cart = By.xpath("//a[contains(@title, 'My Cart')]");
+    public static final By shoppingTable = By.xpath("//table[@id='shopping-cart-table' or contains(@class, 'cart')]");
+    public static final By cartTotal = By.xpath("//div[contains(@class, 'cart-totals')]");
+    public static final By grandTotal =   By.xpath("//div[contains(@class, 'cart-totals')]//span[@class='price']");
 }

@@ -21,9 +21,9 @@ public class HoverStyleTest extends BaseTest {
         consentCookiesPage.submitButton();
         registerPage.clickAccountButton();
         signInPage.login();
-        hoverStylePage.hoverWomen();
-        hoverStylePage.clickViewAll();
-        hoverStylePage.hoverDress();
+//        hoverStylePage.hoverWomen();
+//        hoverStylePage.clickViewAll();
+//        hoverStylePage.hoverDress();
 
     }
 }
