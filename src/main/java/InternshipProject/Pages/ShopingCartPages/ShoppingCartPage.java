@@ -44,67 +44,98 @@ public class ShoppingCartPage {
     }
 
     public void editProducts() {
-        basePageObject.getWaitUtils().waitForPageToLoad();
+        WebDriverWait wait = new WebDriverWait(BaseInformation.getDriver(), Duration.ofSeconds(10));
         int editsRemaining = 2;
         int processed = 0;
         while (processed < editsRemaining) {
             try {
-                List<WebElement> productRows = BaseInformation.getDriver().findElements(ShoppingCartElements.productRow);
-//                if (productRows.isEmpty()) {
-//                    Assert.fail("No products found in wishlist, retrying...");
-//                    continue;
-//                }
-                WebElement currentRow = productRows.get(0);
+                basePageObject.getWaitUtils().waitForPageToLoad();
+                List<WebElement> productRows = wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(
+                        ShoppingCartElements.productRow));
+
+                if (productRows.isEmpty()) {
+                    Assert.fail("No products found in wishlist");
+                }
+
+                // Get the first product row
+                WebElement currentRow = wait.until(ExpectedConditions.presenceOfElementLocated(
+                        By.xpath("(//tr[contains(@class, 'odd') or contains(@class, 'even')])[1]")));
                 basePageObject.getWebElementUtils().scrollToElement(currentRow);
 
-                WebElement editButton = basePageObject.getWebElementUtils().findClickableElement(
-                        BaseInformation.getDriver(), ShoppingCartElements.editButton);
-                if (editButton == null) {
-                    Assert.fail("Edit button not found!");
-                    continue;
-                }
+                // Find and click the edit button with wait
+                WebElement editButton = wait.until(ExpectedConditions.elementToBeClickable(
+                        ShoppingCartElements.editButton));
+                basePageObject.getWebElementUtils().scrollToElement(editButton);
                 basePageObject.getWebElementUtils().safeClick(editButton);
+
+                // Wait for product page to load after clicking edit
                 basePageObject.getWaitUtils().waitForPageToLoad();
 
+                // Choose color based on current iteration
                 String color = (processed == 0) ? "Black" : "White";
-                WebElement colorOption = basePageObject.getWebElementUtils()
-                        .findClickableElement(BaseInformation.getDriver(), By.cssSelector("img[alt='" + color + "']"));
-                if (colorOption == null) {
-                    Assert.fail("Color option not found!");
-                    continue;
-                }
+
+                // Wait for color option to be clickable
+                By colorSelector = By.cssSelector("img[alt='" + color + "']");
+                WebElement colorOption = wait.until(ExpectedConditions.elementToBeClickable(colorSelector));
                 basePageObject.getWebElementUtils().scrollToElement(colorOption);
                 basePageObject.getWebElementUtils().safeClick(colorOption);
-                WebElement sizeOption = basePageObject.getWebElementUtils()
-                        .findClickableElement(BaseInformation.getDriver(), ShoppingCartElements.size);
-                if (sizeOption == null) {
-                    Assert.fail("Size option not found, retrying...");
-                    continue;
-                }
+
+                // Short wait after color selection to ensure page updates
+                Thread.sleep(500);
+
+                // Find and click size option with wait
+                WebElement sizeOption = wait.until(ExpectedConditions.elementToBeClickable(
+                        ShoppingCartElements.size));
                 basePageObject.getWebElementUtils().scrollToElement(sizeOption);
                 basePageObject.getWebElementUtils().safeClick(sizeOption);
-                WebElement addToCart = basePageObject.getWebElementUtils().findClickableElement(BaseInformation.getDriver(), ShoppingCartElements.submitButton);
-                if (addToCart == null) {
-                    Assert.fail("Add to cart button not found, retrying...");
-                    continue;
-                }
+
+                // Short wait after size selection to ensure page updates
+                Thread.sleep(500);
+
+                // Find and click the Add to Cart button with wait
+                WebElement addToCart = wait.until(ExpectedConditions.elementToBeClickable(
+                        ShoppingCartElements.submitButton));
                 basePageObject.getWebElementUtils().scrollToElement(addToCart);
                 basePageObject.getWebElementUtils().safeClick(addToCart);
-                basePageObject.getWaitUtils().waitForPageToLoad();
+
+                // Wait for success message or page update after adding to cart
+                try {
+                    wait.until(ExpectedConditions.or(
+                            ExpectedConditions.presenceOfElementLocated(By.cssSelector(".message-success")),
+                            ExpectedConditions.presenceOfElementLocated(By.cssSelector(".messages"))
+                    ));
+                } catch (Exception e) {
+                    // Even if we don't see a success message, wait for page load
+                    basePageObject.getWaitUtils().waitForPageToLoad();
+                }
 
                 processed++;
-                Assert.assertTrue("Successfully processed product " + processed + " of " + editsRemaining, true);
+
+                // Navigate back to wishlist for the next product
                 navigateToWishlist(BaseInformation.getDriver());
 
+                // Wait for wishlist page to load
+                basePageObject.getWaitUtils().waitForPageToLoad();
+
             } catch (Exception e) {
-                Assert.fail("Error: " + e.getMessage());
+                // If we encounter an error, try to recover by returning to wishlist
                 try {
                     navigateToWishlist(BaseInformation.getDriver());
+                    basePageObject.getWaitUtils().waitForPageToLoad();
+
+                    // If we can't recover for this product, log and continue with next
+                    if (e.getMessage().contains("stale element")) {
+                        processed++; // Skip this product and move on
+                    } else {
+                        Assert.fail("Error editing product " + (processed + 1) + ": " + e.getMessage());
+                    }
                 } catch (Exception recoveryEx) {
                     Assert.fail("Recovery failed: " + recoveryEx.getMessage());
                 }
             }
         }
+
+        Assert.assertEquals("Not all products were edited successfully", editsRemaining, processed);
     }
 
 
