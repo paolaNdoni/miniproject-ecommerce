@@ -21,11 +21,7 @@ public class ShoppingCartPage {
     BasePageObject basePageObject = new BasePageObject();
     WishlistElements wishlistElements = new WishlistElements();
     RegisterPageElements registerPageElements = new RegisterPageElements();
-    private WebDriverWait wait = new WebDriverWait(BaseInformation.getDriver(), Duration.ofSeconds(10));
 
-    private WebElement find(By locator) {
-        return wait.until(ExpectedConditions.elementToBeClickable(locator));
-    }
 
     public ShoppingCartPage() {
         PageFactory.initElements(BaseInformation.getDriver(), this);
@@ -56,11 +52,11 @@ public class ShoppingCartPage {
                 if (productRows.isEmpty()) {
                     Assert.fail("No products found in wishlist");
                 }
-                WebElement currentRow = wait.until(ExpectedConditions.presenceOfElementLocated(
-                        By.xpath("(//tr[contains(@class, 'odd') or contains(@class, 'even')])[1]")));
+                WebElement currentRow = basePageObject.getWaitUtils().find(
+                        By.xpath("(//tr[contains(@class, 'odd') or contains(@class, 'even')])[1]"));
                 basePageObject.getWebElementUtils().scrollToElement(currentRow);
-                WebElement editButton = wait.until(ExpectedConditions.elementToBeClickable(
-                        ShoppingCartElements.editButton));
+                WebElement editButton = basePageObject.getWaitUtils().find(
+                        ShoppingCartElements.editButton);
                 basePageObject.getWebElementUtils().scrollToElement(editButton);
                 basePageObject.getWebElementUtils().safeClick(editButton);
                 basePageObject.getWaitUtils().waitForPageToLoad();
@@ -124,7 +120,7 @@ public class ShoppingCartPage {
     }
 
     public void clickShoppingCart() {
-        WebElement cart = find(ShoppingCartElements.cart);
+        WebElement cart = basePageObject.getWaitUtils().find(ShoppingCartElements.cart);
         basePageObject.getWebElementUtils().scrollTo(cart);
         cart.click();
     }
@@ -176,7 +172,7 @@ public class ShoppingCartPage {
                     WebElement row = productRows.get(i);
                     basePageObject.getWebElementUtils().scrollTo(row);
 
-                    WebElement priceElement = find(By.xpath("(//tr[contains(@class, 'odd') or contains(@class, 'even')])[" + (i + 1) +
+                    WebElement priceElement = basePageObject.getWaitUtils().find(By.xpath("(//tr[contains(@class, 'odd') or contains(@class, 'even')])[" + (i + 1) +
                                     "]//td[@class='product-cart-total']//span[@class='price']"));
 
                     basePageObject.getWebElementUtils().scrollTo(priceElement);

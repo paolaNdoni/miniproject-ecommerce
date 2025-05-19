@@ -1,7 +1,5 @@
 package test1;
 
-import InternshipProject.ConsentCookies.ConsentCookiesPage;
-import InternshipProject.Globals.Globals;
 import InternshipProject.Pages.RegistrationTestPages.RegisterPage;
 import InternshipProject.Pages.ShopingCartPages.EmptyShoppingCartPage;
 import InternshipProject.Pages.ShopingCartPages.ShoppingCartPage;

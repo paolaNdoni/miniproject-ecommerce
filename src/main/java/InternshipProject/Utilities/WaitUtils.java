@@ -46,6 +46,10 @@ public class WaitUtils {
     public WebElement waitForElementClickable(WebElement element) {
         return waitForElementClickableWithCustomTime(defaultDuration.toMillis(), element);
     }
+    public WebElement find(By locator) {
+        WebDriverWait wait = new WebDriverWait(BaseInformation.getDriver(), Duration.ofSeconds(10));
+        return wait.until(ExpectedConditions.elementToBeClickable(locator));
+    }
 
     public WebElement waitForElementVisible(WebElement element) {
         return waitForElementVisibleWithCustomTime(defaultDuration.toMillis(), element);
