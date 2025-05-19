@@ -5,7 +5,6 @@ import InternshipProject.Elements.ShoppingCartElements;
 import InternshipProject.Elements.WishlistElements;
 import InternshipProject.Utilities.BaseInformation;
 import InternshipProject.Utilities.BasePageObject;
-import com.fasterxml.jackson.databind.ser.Serializers;
 import org.junit.Assert;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
@@ -159,6 +158,7 @@ public class ShoppingCartPage {
              System.out.println("Failed to change quantity"  + e.getMessage());
          }
     }
+
     public void verifyCartTotals() {
         WebDriverWait wait = new WebDriverWait(BaseInformation.getDriver(), Duration.ofSeconds(10));
         double sumOfProductPrices = 0.0;
@@ -177,9 +177,8 @@ public class ShoppingCartPage {
                     WebElement row = productRows.get(i);
                     basePageObject.getWebElementUtils().scrollTo(row);
 
-                    WebElement priceElement = wait.until(ExpectedConditions.presenceOfElementLocated(
-                            By.xpath("(//tr[contains(@class, 'odd') or contains(@class, 'even')])[" + (i + 1) +
-                                    "]//td[@class='product-cart-total']//span[@class='price']")));
+                    WebElement priceElement = find(By.xpath("(//tr[contains(@class, 'odd') or contains(@class, 'even')])[" + (i + 1) +
+                                    "]//td[@class='product-cart-total']//span[@class='price']"));
 
                     basePageObject.getWebElementUtils().scrollTo(priceElement);
                     String priceText = priceElement.getText().trim();
@@ -199,8 +198,6 @@ public class ShoppingCartPage {
             double delta = 0.01;
             Assert.assertEquals("Sum of product prices does not match the grand total",
                     grandTotal, sumOfProductPrices, delta);
-        } catch (AssertionError e) {
-            throw e;
         } catch (Exception e) {
             Assert.fail("Exception during cart total verification: " + e.getMessage());
         }

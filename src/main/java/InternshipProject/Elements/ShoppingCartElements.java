@@ -19,4 +19,5 @@ public class ShoppingCartElements {
     public static final By shoppingTable = By.xpath("//table[@id='shopping-cart-table' or contains(@class, 'cart')]");
     public static final By cartTotal = By.xpath("//div[contains(@class, 'cart-totals')]");
     public static final By grandTotal =   By.xpath("//div[contains(@class, 'cart-totals')]//span[@class='price']");
+    public static final By firstProduct = By.xpath("(//tr[contains(@class, 'odd') or contains(@class, 'even')])[1]");
 }
