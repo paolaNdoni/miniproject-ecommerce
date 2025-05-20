@@ -3,11 +3,12 @@ package miniprojectTest;
 import InternshipProject.Pages.RegistrationTestPages.RegisterPage;
 import InternshipProject.Pages.ShopingCartPages.EmptyShoppingCartPage;
 import InternshipProject.Pages.ShopingCartPages.ShoppingCartPage;
+import miniprojectTest.Listeners.ExtentTestListener;
 import miniprojectTest.Listeners.TestListener;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
-@Listeners(TestListener.class)
+@Listeners({TestListener.class, ExtentTestListener.class})
 public class ShoppingCartTest extends BaseTest {
     RegisterPage registerPage = new RegisterPage();
     ShoppingCartPage shoppingCartPage = new ShoppingCartPage();
