@@ -68,7 +68,7 @@ Browser type (chrome/firefox/edge)
 Other environment-specific configurations
 
 ## How to setup this project
-git clone 
+git clone https://github.com/paolaNdoni/miniproject-ecommerce.git
 
 ## Key Features
 Page Object Model
