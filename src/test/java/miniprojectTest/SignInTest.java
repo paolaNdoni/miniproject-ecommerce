@@ -2,6 +2,7 @@ package miniprojectTest;
 
 import InternshipProject.Pages.RegistrationTestPages.RegisterPage;
 import InternshipProject.Pages.RegistrationTestPages.SignInPage;
+import miniprojectTest.Listeners.TestListener;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 

@@ -15,9 +15,6 @@ public class SignInPage {
         PageFactory.initElements(BaseInformation.getDriver(), this);
     }
 
-    public void getUrl(String url){
-        BaseInformation.getDriver().get(url);
-    }
     public void deleteCookies() {
         WebDriver driver = BaseInformation.getDriver();
         driver.manage().deleteAllCookies();

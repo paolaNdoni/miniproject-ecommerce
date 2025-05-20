@@ -11,8 +11,8 @@
         </classes>
     </test>
     <listeners>
-        <listener class-name="miniprojectTest.TestListener"/>
-        <listener class-name="miniprojectTest.ExtentTestListener"/>
+        <listener class-name="miniprojectTest.Listeners.TestListener"/>
+        <listener class-name="miniprojectTest.Listeners.ExtentTestListener"/>
 
     </listeners>
 </suite>

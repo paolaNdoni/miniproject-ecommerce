@@ -4,6 +4,7 @@ package miniprojectTest;
 import InternshipProject.Pages.ModifyElementsPages.CheckSalePage;
 import InternshipProject.Pages.ModifyElementsPages.HoverStylePage;
 
+import miniprojectTest.Listeners.TestListener;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 @Listeners(TestListener.class)

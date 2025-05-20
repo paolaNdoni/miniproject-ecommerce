@@ -1,4 +1,4 @@
-package miniprojectTest;
+package miniprojectTest.Listeners;
 
 import InternshipProject.Utilities.BaseInformation;
 import InternshipProject.Utilities.ScreenshotUtils;

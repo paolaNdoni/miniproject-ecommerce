@@ -4,6 +4,8 @@ import InternshipProject.ConsentCookies.ConsentCookiesPage;
 import InternshipProject.Globals.Globals;
 import InternshipProject.Pages.RegistrationTestPages.RegisterPage;
 
+import miniprojectTest.Listeners.ExtentTestListener;
+import miniprojectTest.Listeners.TestListener;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 @Listeners({TestListener.class, ExtentTestListener.class})

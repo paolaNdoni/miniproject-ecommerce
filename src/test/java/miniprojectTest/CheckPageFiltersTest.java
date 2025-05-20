@@ -2,6 +2,7 @@ package miniprojectTest;
 
 import InternshipProject.Pages.ModifyElementsPages.CheckPageFiltersPage;
 import InternshipProject.Pages.ModifyElementsPages.HoverStylePage;
+import miniprojectTest.Listeners.TestListener;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
@@ -12,12 +13,12 @@ public class CheckPageFiltersTest extends BaseTest{
     @Test
     public void test() throws InterruptedException {
 
-//        hoverStylePage.hoverMan();
-//        hoverStylePage.clickViewAllMen();
-//        checkPageFiltersPage.clickBlack();
-//        checkPageFiltersPage.checkBlueOutline();
-//        checkPageFiltersPage.navigateBack();
-//        checkPageFiltersPage.clickPrice();
-//        checkPageFiltersPage.checkPrices();
+        hoverStylePage.hoverMan();
+        hoverStylePage.clickViewAllMen();
+        checkPageFiltersPage.clickBlack();
+        checkPageFiltersPage.checkBlueOutline();
+        checkPageFiltersPage.navigateBack();
+        checkPageFiltersPage.clickPrice();
+        checkPageFiltersPage.checkPrices();
     }
 }

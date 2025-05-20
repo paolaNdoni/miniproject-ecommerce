@@ -77,14 +77,14 @@ public class ShoppingCartPage {
                 basePageObject.getWebElementUtils().scrollToElement(addToCart);
                 basePageObject.getWebElementUtils().safeClick(addToCart);
 
-                try {
-                    wait.until(ExpectedConditions.or(
-                            ExpectedConditions.presenceOfElementLocated(By.cssSelector(".message-success")),
-                            ExpectedConditions.presenceOfElementLocated(By.cssSelector(".messages"))
-                    ));
-                } catch (Exception e) {
-                    basePageObject.getWaitUtils().waitForPageToLoad();
-                }
+//                try {
+//                    wait.until(ExpectedConditions.or(
+//                            ExpectedConditions.presenceOfElementLocated(By.cssSelector(".message-success")),
+//                            ExpectedConditions.presenceOfElementLocated(By.cssSelector(".messages"))
+//                    ));
+//                } catch (Exception e) {
+//                    basePageObject.getWaitUtils().waitForPageToLoad();
+//                }
 
                 processed++;
                 navigateToWishlist(BaseInformation.getDriver());

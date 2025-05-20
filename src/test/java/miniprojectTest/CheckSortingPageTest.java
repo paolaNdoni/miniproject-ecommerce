@@ -4,6 +4,7 @@ import InternshipProject.Pages.ModifyElementsPages.CheckSortingPage;
 import InternshipProject.Pages.ModifyElementsPages.HoverStylePage;
 import InternshipProject.Pages.RegistrationTestPages.RegisterPage;
 
+import miniprojectTest.Listeners.TestListener;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 @Listeners(TestListener.class)

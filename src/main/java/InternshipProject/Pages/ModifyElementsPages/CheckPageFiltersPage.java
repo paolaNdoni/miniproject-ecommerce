@@ -64,7 +64,7 @@ public class CheckPageFiltersPage {
                     if (!hasBlueOutline) {
                         String borderColor = swatchLink.getCssValue("border-top-color");
                         hasBlueOutline = borderColor.contains("rgba(51, 153, 204, 1)") ||
-                                borderColor.contains("rgba(51,153,204)");
+                                borderColor.contains("rgba(51,153,204,1)");
                         Assert.assertTrue("Product " + (i+1) + " selected swatch has incorrect border color: " + borderColor,
                                 hasBlueOutline);
                     }
@@ -93,7 +93,6 @@ public class CheckPageFiltersPage {
                 .click();
         basePageObject.getWaitUtils()
                 .waitForNumberOfElementsToBe(productContainer, 3, 5000);
-
         List<WebElement> products = BaseInformation.getDriver()
                 .findElements(productContainer);
         Assert.assertEquals("Expected 3 products to be displayed", 3, products.size());
