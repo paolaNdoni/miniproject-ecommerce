@@ -24,17 +24,17 @@ miniproject-ecommerce [dem]/
 
 │   │   │  ├──InternshipProject
 
-│   │   │   ├── ConsentCookies/        # Handling consent cookies class
+│   │   │  │  ├── ConsentCookies/        # Handling consent cookies class
 
-│   │   │   ├── Elements/        # Elements classes
+│   │   │  │  ├── Elements/        # Elements classes
 
-│   │   │   ├── Globals/        # Globals class
+│   │   │  │  ├── Globals/        # Globals class
 
-│   │   │   ├── Pages/        # Page Object classes
+│   │   │  │  ├── Pages/        # Page Object classes
 
-│   │   │   ├── Utilities/        # Utilities classes
+│   │   │  │  ├── Utilities/        # Utilities classes
 
-│   │   │    ├── resources/      # Configuration properties file
+│   │   │  │  ├── resources/      # Configuration properties file
 
 
 │   └── test/
@@ -51,9 +51,9 @@ miniproject-ecommerce [dem]/
 
 └── README.md                 # This file
 
-│   │   │    ├── testng.xml/            #Run test 1,2
+├── testng.xml/            #Run test 1,2
 
-│   │   │    ├── testng2.xml/           #Run test 3,4,5,6,7,8
+├── testng2.xml/           #Run test 3,4,5,6,7,8
 
 ## WebDriver Setup
 Place the appropriate WebDriver executables in the resources/drivers directory or configure the path in config.properties.
@@ -66,6 +66,9 @@ Base URL
 Browser type (chrome/firefox/edge)
 
 Other environment-specific configurations
+
+## How to setup this project
+git clone 
 
 ## Key Features
 Page Object Model

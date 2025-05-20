@@ -22,7 +22,7 @@ public class RegistrationTest extends BaseTest {
         registerPage.clickRegisterButton();
         registerPage.checkPageTitle("Tealium Ecommerce Demo");
         registerPage.setFirstName("Paola");
-        registerPage.setMiddleName("P");
+        registerPage.setMiddleName("Pao");
         registerPage.setLastName("Ndoni");
         registerPage.setEmail();
         registerPage.setPassword();

@@ -144,7 +144,8 @@ public class ShoppingCartPage {
             for (char c : qtyText.toCharArray()) {
                 actions.sendKeys(String.valueOf(c)).perform();
             }
-            WebElement updateButton = basePageObject.getWaitUtils().waitForElementVisibleWithCustomTime(5000, ShoppingCartElements.updateButton);
+            WebElement updateButton = basePageObject.getWaitUtils()
+                    .waitForElementVisibleWithCustomTime(5000, ShoppingCartElements.updateButton);
             basePageObject.getWebElementUtils().scrollTo(updateButton);
             updateButton.click();
 
