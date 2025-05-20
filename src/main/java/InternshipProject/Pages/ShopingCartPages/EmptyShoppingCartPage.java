@@ -46,13 +46,6 @@ public class EmptyShoppingCartPage {
                     basePageObject.getWebElementUtils().scrollTo(removeButton);
                     removeButton.click();
 
-                    try {
-                        WebElement confirmButton = basePageObject.getWaitUtils().find(
-                                ShoppingCartElements.confirmButton);
-                        confirmButton.click();
-                    } catch (Exception ignore) {
-                    }
-
                     basePageObject.getWaitUtils().waitForPageToLoad();
                     Thread.sleep(1000); //force refresh
                     BaseInformation.getDriver().navigate().refresh();
@@ -87,6 +80,17 @@ public class EmptyShoppingCartPage {
 
         } catch (Exception e) {
             Assert.fail("Exception during product removal from cart: " + e.getMessage());
+        }
+    }
+    public void removedItemsConfirmation() {
+        try {
+            WebElement confirmationElement =
+                    basePageObject.getWaitUtils().find(ShoppingCartElements.confirmRemove);
+            if (!confirmationElement.isDisplayed()) {
+                Assert.fail("Removal confirmation is not visible");
+            }
+        } catch (Exception e) {
+            Assert.fail("Removal confirmation element not found or not visible");
         }
     }
 }

@@ -2,12 +2,12 @@
 <suite name="MyTestSuite">
     <test name="Registration">
         <classes>
-            <class name="test1.RegistrationTest" />
-            <class name="test1.SignInTest"/>
+            <class name="miniprojectTest.RegistrationTest" />
+            <class name="miniprojectTest.SignInTest"/>
         </classes>
     </test>
     <listeners>
-        <listener class-name="test1.TestListener"/>
-        <listener class-name="test1.ExtentTestListener"/>
+        <listener class-name="miniprojectTest.TestListener"/>
+        <listener class-name="miniprojectTest.ExtentTestListener"/>
     </listeners>
 </suite>

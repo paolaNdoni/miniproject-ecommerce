@@ -20,5 +20,5 @@ public class ShoppingCartElements {
     public static final By cartTotal = By.xpath("//div[contains(@class, 'cart-totals')]");
     public static final By grandTotal =   By.xpath("//div[contains(@class, 'cart-totals')]//span[@class='price']");
     public static final By firstProduct = By.xpath("(//tr[contains(@class, 'odd') or contains(@class, 'even')])[1]");
-    public static final By confirmButton =  By.xpath("//button[contains(@class, 'confirm') or contains(@class, 'ok') or contains(text(), 'OK')]");
+    public static final By confirmRemove = By.xpath("//div[@class='page-title']/h1");
 }

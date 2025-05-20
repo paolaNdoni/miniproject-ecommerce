@@ -1,4 +1,4 @@
-package test1;
+package miniprojectTest;
 
 import InternshipProject.Pages.RegistrationTestPages.RegisterPage;
 import InternshipProject.Pages.ShopingCartPages.EmptyShoppingCartPage;
@@ -20,6 +20,7 @@ public class ShoppingCartTest extends BaseTest {
         shoppingCartPage.changeQuantity("2");
         shoppingCartPage.verifyCartTotals();
         emptyShoppingCartPage.removeProductsFromCart();
+        emptyShoppingCartPage.removedItemsConfirmation();
 
 
     }

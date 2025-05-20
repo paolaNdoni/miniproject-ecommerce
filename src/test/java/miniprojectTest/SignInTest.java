@@ -1,4 +1,4 @@
-package test1;
+package miniprojectTest;
 
 import InternshipProject.Pages.RegistrationTestPages.RegisterPage;
 import InternshipProject.Pages.RegistrationTestPages.SignInPage;

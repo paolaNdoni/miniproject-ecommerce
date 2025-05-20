@@ -1,4 +1,4 @@
-package test1;
+package miniprojectTest;
 
 import InternshipProject.Utilities.BaseInformation;
 import org.testng.annotations.AfterSuite;

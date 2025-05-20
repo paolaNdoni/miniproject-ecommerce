@@ -1,4 +1,4 @@
-package test1;
+package miniprojectTest;
 
 import InternshipProject.ConsentCookies.ConsentCookiesPage;
 import InternshipProject.Globals.Globals;

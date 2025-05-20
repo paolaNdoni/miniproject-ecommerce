@@ -1,4 +1,4 @@
-package test1;
+package miniprojectTest;
 
 import InternshipProject.Pages.ModifyElementsPages.CheckPageFiltersPage;
 import InternshipProject.Pages.ModifyElementsPages.HoverStylePage;

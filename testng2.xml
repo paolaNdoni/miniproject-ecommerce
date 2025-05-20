@@ -2,17 +2,17 @@
 <suite name="Modify elements">
     <test name="Test2">
         <classes>
-            <class name="test1.HoverStyleTest"/>
-            <class name="test1.CheckSaleTest"/>
-            <class name="test1.CheckPageFiltersTest"/>
-            <class name="test1.CheckSortingPageTest"/>
-            <class name="test1.ShoppingCartTest"/>
+            <class name="miniprojectTest.HoverStyleTest"/>
+            <class name="miniprojectTest.CheckSaleTest"/>
+            <class name="miniprojectTest.CheckPageFiltersTest"/>
+            <class name="miniprojectTest.CheckSortingPageTest"/>
+            <class name="miniprojectTest.ShoppingCartTest"/>
 
         </classes>
     </test>
     <listeners>
-        <listener class-name="test1.TestListener"/>
-        <listener class-name="test1.ExtentTestListener"/>
+        <listener class-name="miniprojectTest.TestListener"/>
+        <listener class-name="miniprojectTest.ExtentTestListener"/>
 
     </listeners>
 </suite>
