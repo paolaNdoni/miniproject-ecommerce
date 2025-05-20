@@ -1,59 +1,40 @@
 # Selenium + Java - Miniproject
 ## Overview
-This project is an automated testing framework built with Selenium WebDriver and Java. It provides a robust structure for creating and executing web UI tests with a focus on maintainability, readability, and extensibility.
+This framework contains a complete solution for testing web applications with Java and Selenium WebDriver. Every test lives in its own structured folder, and common setup tasks—like opening a browser, navigating to the site, and logging in—are handled automatically behind the scenes. When a test finds a bug, the framework captures screenshots and detailed logs so you can see what went wrong.
 # Prerequisites
 Chrome/Firefox (latest versions recommended)
 
-Java JDK 24(or at least a JVM that supports class-file version 68)
+Java JDK 18 (Oracle JDK)
+
+Maven 3.9.9 or higher
 
 ChromeDriver
 
 ## Project Structure
+```python
 miniproject-ecommerce [dem]/
 
 ├──.idea
-
 ├──screenshots
-
 ├── src/
-
 │   ├── main/
-
-
 │   │   └── java/
-
 │   │   │  ├──InternshipProject
-
-│   │   │  │  ├── ConsentCookies/        # Handling consent cookies class
-
-│   │   │  │  ├── Elements/        # Elements classes
-
-│   │   │  │  ├── Globals/        # Globals class
-
-│   │   │  │  ├── Pages/        # Page Object classes
-
-│   │   │  │  ├── Utilities/        # Utilities classes
-
-│   │   │  │  ├── resources/      # Configuration properties file
-
-
+│   │   │  │  ├── ConsentCookies/  (Handling consent cookies class)
+│   │   │  │  ├── Elements/        (Elements classes)
+│   │   │  │  ├── Globals/         (Globals class)
+│   │   │  │  ├── Pages/           (Page Object classes)
+│   │   │  │  ├── Utilities/       (Utilities classes)
+│   │   │  │  ├── resources/       (Configuration properties file)
 │   └── test/
-
-
 │       └── java/
-
-
-│           └── miniProjectTest/        # Test classes
-
-│    ├──test-output/          Html page with test reports
-
-├── pom.xml                   # Maven dependencies
-
-└── README.md                 # This file
-
-├── testng.xml/            #Run test 1,2
-
-├── testng2.xml/           #Run test 3,4,5,6,7,8
+│           └── miniProjectTest/ (Test classes)
+│    ├──test-output/(Html page with test reports)
+├── pom.xml         (Maven dependencies)
+└── README.md       (This file)
+├── testng.xml/     (Run test 1,2
+├── testng2.xml/    (Run test 3,4,5,6,7,8)
+```
 
 ## WebDriver Setup
 Place the appropriate WebDriver executables in the resources/drivers directory or configure the path in config.properties.
@@ -67,17 +48,27 @@ Browser type (chrome/firefox/edge)
 
 Other environment-specific configurations
 
+## Technologies Used
+```
+Java 18
+TestNG
+Extent Reports
+```
 ## How to setup this project
+```
 git clone https://github.com/paolaNdoni/miniproject-ecommerce.git
-
+```
 ## Key Features
-Page Object Model
+```
+-Page Object Model(POM)
 The framework implements the Page Object Model design pattern to improve test maintenance and reduce code duplication.
 
-The framework uses a factory design pattern to manage WebDriver instances:
+-Singleton Design Pattern
 
-Automated screenshot capture on test failure.
+-The framework uses a factory design pattern to manage WebDriver instances:
 
+-Automated screenshot capture on test failure.
+```
 ### Best Practices Implemented
 
 Explicit Waits: Using WebDriverWait for better synchronization
@@ -88,6 +79,12 @@ Exception Handling: Proper exception handling for WebDriver operations
 
 Configuration Management: Externalized configuration through properties files
 
-Logging: Integrated logging for better debug information
+## Reports 
+```
+-Reports: After execution, a detailed HTML report will be generated at ./ExtendReport.html.
+The report contains information on test cases executed, passed, failed, and skipped, along with screenshots for failed tests.
+```
+## Author
+@paolaNdoni 
 
-
+Email Address:ndonipaola@gmail.com
